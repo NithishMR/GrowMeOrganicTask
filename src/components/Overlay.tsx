@@ -13,7 +13,7 @@ const Overlay: React.FC<OverlayProps> = ({ onClose, onSubmit }) => {
       className="overlay"
       style={{
         position: "absolute", // Positioning within the parent
-        top: "100%", // Place below the header
+        top: "50px", // Adjust this value to position it below the chevron
         left: "50%",
         transform: "translateX(-50%)",
         width: "300px",

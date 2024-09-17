@@ -6,21 +6,21 @@
 @layer components {
   .custom-title-header {
     position: relative;
-    padding-right: 20px; /* Adjust this for padding if needed */
+    padding-right: 20px;
   }
 
   .custom-title-header::before {
     content: "";
     position: absolute;
-    right: 0; /* Adjust the position to align it behind the text */
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 12px; /* Adjust size as needed */
-    height: 12px; /* Adjust size as needed */
-    background-image: url("../src/icons/chevDown.png"); /* Adjust the path if needed */
+    width: 12px;
+    height: 12px;
+    background-image: url("../src/icons/chevDown.png");
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.5; /* Adjust the opacity for a subtle background effect */
-    z-index: -1; /* Ensure it appears behind the text */
+    opacity: 0.5;
+    z-index: -1;
   }
 }

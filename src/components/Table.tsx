@@ -31,12 +31,16 @@ const Table: React.FC<TableProps> = ({
   setRowsToSelect,
 }) => {
   const op = useRef<OverlayPanel>(null); // Reference for OverlayPanel
-  const [inputValue, setInputValue] = useState(""); // State for input value // State for toggle selection
+  const [inputValue, setInputValue] = useState(""); // State for input value
 
   // Handle selection change
   const handleSelectionChange = (e: { value: Artwork[] }) => {
     const selectedIds = new Set<number>(e.value.map((artwork) => artwork.id));
-    setSelectedArtworks(selectedIds); // Directly set the selected artworks
+    setSelectedArtworks((prevSelected) => {
+      const newSelected = new Set(prevSelected);
+      selectedIds.forEach((id) => newSelected.add(id));
+      return newSelected;
+    });
   };
 
   // Handle overlay submission
@@ -54,7 +58,19 @@ const Table: React.FC<TableProps> = ({
     }
   }, [rowsToSelect, artworks, setRowsToSelect]);
 
-  // Toggle select/deselect all rows
+  // Deselect all rows
+  const deselectAll = () => {
+    setSelectedArtworks(new Set());
+  };
+
+  // Deselect individual row
+  const deselectRow = (id: number) => {
+    setSelectedArtworks((prevSelected) => {
+      const newSelected = new Set(prevSelected);
+      newSelected.delete(id);
+      return newSelected;
+    });
+  };
 
   // Custom header for the Title column
   const titleHeader = () => (
@@ -113,7 +129,18 @@ const Table: React.FC<TableProps> = ({
         rows={5}
         tableStyle={{ minWidth: "50rem" }}
       >
-        <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
+        <Column
+          selectionMode="multiple"
+          headerStyle={{ width: "3rem" }}
+          body={(rowData) => (
+            <Button
+              icon="pi pi-times"
+              className="p-button-danger p-button-rounded p-button-text"
+              onClick={() => deselectRow(rowData.id)}
+              title="Deselect Row"
+            />
+          )}
+        />
         <Column field="title" header={titleHeader} />
         <Column field="inscriptions" header="Inscriptions" />
         <Column field="place_of_origin" header="Place of Origin" />
